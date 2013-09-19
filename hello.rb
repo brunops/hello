@@ -1,3 +1,4 @@
+require 'sinatra'
 require './db/config'
 
 class User < ActiveRecord::Base
@@ -7,7 +8,11 @@ get '/' do
   "Hello Sinatra!"
 end
 
-User.create({
-  :name => "user",
-  :email => "test@example.com"
-})
+get '/users' do
+  @users = User.all
+  erb :users
+end
+
+post '/user/new' do
+  User.create(params)
+end
